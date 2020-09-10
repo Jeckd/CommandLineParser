@@ -13,11 +13,15 @@ namespace CommandLineParser.Test
     {
 
         [TestMethod]
-        public void Parser_returns_an_options_class()
+        public void Parser_returns_an_options_instance_with_correct_field_string_value()
         {
-            Assert.IsNotNull(CommandLineParser<TestCommandLineOptions>.GetOptions(new string[]{ "field = 5"}));
+            Assert.IsTrue(CommandLineParser<TestCommandLineOptions>.GetOptions(new string[]{ "field = field_string"}).OptionField == "field_string");
         }
 
-
+        [TestMethod]
+        public void Parser_returns_an_options_instance_with_correct_property_string_value()
+        {
+            Assert.IsTrue(CommandLineParser<TestCommandLineOptions>.GetOptions(new string[] { "property = property_string" }).OptionProperty == "property_string");
+        }
     }
 }

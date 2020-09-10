@@ -19,7 +19,7 @@ namespace CommandLineParser
             }
             else if (HasProperty(optionLongName))
             {
-                SetProperty(optionLongName, ConvertValue(GetFieldType(optionLongName), value));
+                SetProperty(optionLongName, ConvertValue(GetPropertyType(optionLongName), value));
             }
             else 
             {
