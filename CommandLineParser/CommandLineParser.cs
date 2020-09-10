@@ -13,9 +13,17 @@ namespace CommandLineParser
             return GetOptions(ArgArrayToDictionary(args));
         }
 
-        private static T GetOptons(IDictionary<string, string> argumentsDictionary)
+        private static T GetOptions(IDictionary<string, string> argumentsDictionary)
         {
-            throw new NotImplementedException();
+
+            var o = new T();
+
+            foreach (var a in argumentsDictionary)
+            {
+                o.SetValue(a.Key, a.Value);
+            }
+
+            return o;
         }
 
         private static IDictionary<string, string> ArgArrayToDictionary(string[] args)
@@ -46,13 +54,11 @@ namespace CommandLineParser
             }
 
             throw new CommandLineException($"Command line argument parsing: Can't parse {s}");
-        
         }
 
         private static string SanitizeArg(string s)
         {
             return s.Trim(' ', '"');
         }
-
     }
 }

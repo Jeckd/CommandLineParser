@@ -14,18 +14,28 @@ namespace CommandLineParser
         public void SetValue(string optionLongName, string value)
         {
             if (HasField(optionLongName))
-            { 
-                SetField(optionLongName, value)
+            {
+                SetField(optionLongName, ConvertValue(GetFieldType(optionLongName), value));
+            }
+            else if (HasProperty(optionLongName))
+            {
+                SetProperty(optionLongName, ConvertValue(GetFieldType(optionLongName), value));
+            }
+            else 
+            {
+                throw new CommandLineException($"Attribute '{optionLongName}' not found");
             }
         }
 
-        private bool HasField(string optionLongName) => GetFieldType(optionLongName) != null;
+        private bool HasField(string optionLongName) => GetFieldInfo(optionLongName) != null;
 
         private bool HasProperty(string optionLongName) => GetPropertyInfo(optionLongName) != null;
 
-        private Type GetFieldType(string optionLongName) => 
+        private Type GetFieldType(string optionLongName) => GetFieldInfo(optionLongName).FieldType;
 
-        private object ConvertToOriginType(Type type, string value)=> Convert.ChangeType(value, type);
+        private Type GetPropertyType(string optionLongName) => GetPropertyInfo(optionLongName).PropertyType;
+
+        private object ConvertValue(Type type, string value)=> Convert.ChangeType(value, type);
 
         private void SetProperty(string optionLongName, object value)=>GetPropertyInfo(optionLongName).SetValue(this, value);
 

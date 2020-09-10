@@ -15,7 +15,9 @@ namespace CommandLineParser.Test
         [TestMethod]
         public void Parser_returns_an_options_class()
         {
-            Assert.IsNotNull(CommandLineParser<TestCommandLineOptions>.GetOptions(null));
+            Assert.IsNotNull(CommandLineParser<TestCommandLineOptions>.GetOptions(new string[]{ "field = 5"}));
         }
+
+
     }
 }
